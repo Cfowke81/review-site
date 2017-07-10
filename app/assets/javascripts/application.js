@@ -15,14 +15,6 @@
 //= require foundation
 //= require_tree .
 
-function updatePageVoteCount(element, voteTotal) {
-  if(voteTotal == 1) {
-    element.text("1 vote");
-  } else {
-    element.text(voteTotal + " votes")
-  }
-}
-
 $(function(){ $(document).foundation(); });
 
 $(document).foundation();
@@ -34,6 +26,14 @@ $(function() {
     })
 });
 
+function updatePageVoteCount(element, voteTotal) {
+  if(voteTotal == 1) {
+    element.text("1 vote");
+  } else {
+    element.text(voteTotal + " votes")
+  }
+};
+
 makeUpvoteAjaxRequest = (id) => {
   $.ajax({
     type: "POST",
@@ -43,7 +43,7 @@ makeUpvoteAjaxRequest = (id) => {
       var divUp = $("tr").find("#up");
       var divDown = $("tr").find("#down");
       divUp.toggleClass("on");
-      divDown.removeClass("on");
+      divDown.toggleClass("off");
 
       var voteCountElement = $("tr").find("#vote-count").find("p");
       var voteTotal = parseInt(voteCountElement.text());
@@ -65,7 +65,7 @@ makeDownvoteAjaxRequest = (id) => {
       var divDown = $("tr").find("#down");
       var divUp = $("tr").find("#up");
       divDown.toggleClass("on");
-      divUp.removeClass("on");
+      divUp.toggleClass("off");
       if (divDown.hasClass("on")) {
         upVoteTotal += 1
         $(divCount).text(upVoteTotal)
